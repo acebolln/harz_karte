@@ -249,7 +249,8 @@
 
   /* ----------  Popup  ---------- */
   .leaflet-popup-content-wrapper{border-radius:var(--r-card);box-shadow:var(--schatten);padding:2px;}
-  .leaflet-popup-content{margin:14px 16px;width:280px!important;max-width:calc(100vw - 80px);font-size:.85rem;line-height:1.5;}
+  /* Höhe begrenzt: Kopfzeile, Tabs, Filter und Kartenart-Schalter brauchen ihren Platz */
+  .leaflet-popup-content{margin:14px 16px;width:280px!important;max-width:calc(100vw - 80px);max-height:max(240px,calc(100dvh - 360px));overflow-y:auto;font-size:.85rem;line-height:1.5;}
   .leaflet-container a.leaflet-popup-close-button{width:36px;height:36px;font-size:22px;line-height:36px;}
   .pop-cat{display:flex;align-items:center;gap:6px;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--c);margin-bottom:4px;padding-right:24px;}
   .pop-cat .dot{width:8px;height:8px;border-radius:50%;background:var(--c);}
@@ -281,6 +282,8 @@
     #panel-list{border-right:none;}
     body[data-view="map"] #panel-list{display:none;}
     body[data-view="list"] #panel-map{display:none;}
+    /* Offenes Popup braucht auf dem Handy die ganze Kartenfläche */
+    body.popup-offen .basemap,body.popup-offen .map-filter{visibility:hidden;}
   }
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important;}
@@ -469,7 +472,7 @@ POIS.forEach((p,i) => {
   const icon = L.divIcon({ className:"", html:`<div class="pin" style="--c:${CATS[p.cat].color}">${i+1}</div>`,
     iconSize:[30,30], iconAnchor:[15,15], popupAnchor:[0,-15] });
   const m = L.marker([p.lat,p.lng], { icon, title:p.name, alt:p.name, riseOnHover:true, keyboard:true });
-  m.bindPopup(() => buildPopup(i), { closeButton:true, autoPanPadding:[16,16] });
+  m.bindPopup(() => buildPopup(i), { closeButton:true, autoPanPaddingTopLeft:[16,72], autoPanPaddingBottomRight:[16,72] });
   m.on("click", () => selectPoi(i, { fly:false }));
   m._visible = false;
   markers[i] = m;
@@ -628,7 +631,8 @@ function selectPoi(i, { fly = true } = {}){
 }
 function clearActive(){ state.activeIndex = null; updateActiveStates(); }
 map.on("click", clearActive);
-map.on("popupclose", clearActive);
+map.on("popupclose", () => { clearActive(); document.body.classList.remove("popup-offen"); });
+map.on("popupopen", () => document.body.classList.add("popup-offen"));
 
 /* =====================================================================
    8 · KATEGORIE-FILTER (Mehrfachauswahl, Liste und Karte synchron)
