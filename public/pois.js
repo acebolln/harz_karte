@@ -54,7 +54,7 @@ const HARZ_POIS = [
     "lng": 10.893,
     "cat": "erlebnis",
     "region": "Ostharz",
-    "desc": "Höchste Staumauer und die drittlängste Hängeseilbrücke (485,5 m) Deutschlands. Extra: GigaSwing in 64m Tiefe oder Aussichtspunkt Rotestein.",
+    "desc": "Hängeseilbrücke Titan-RT über der Rappbodetalsperre, 458 m lang und laut Betreiber eine der längsten. Extra: GigaSwing mit 70 m freiem Fall (ab 10 Jahren) oder Aussichtspunkt Rotestein.",
     "web": "https://harzdrenalin.de/abenteuer/titan-rt/",
     "parken": "Hauptparkplatz „Rappbodetalsperre“ an der L 96, Ticketcenter am Parkplatz",
     "dauer": "1–2 Std.",
@@ -72,7 +72,7 @@ const HARZ_POIS = [
     "lng": 10.34,
     "cat": "kultur",
     "region": "Westharz",
-    "desc": "Die Gustav-Adolf-Stabkirche von 1907. Typisch norwegische Bauweise im Goslarer Stadtteil Hahnenklee. Duftet innen herrlich nach Holz.",
+    "desc": "Die Gustav-Adolf-Stabkirche, erbaut 1907–1908. Typisch norwegische Bauweise im Goslarer Stadtteil Hahnenklee. Duftet innen herrlich nach Holz.",
     "web": "https://www.stabkirche.de/",
     "dauer": "ca. 45 Min.",
     "kinder": "ja",
@@ -101,11 +101,11 @@ const HARZ_POIS = [
   },
   {
     "name": "Wolfswarte auf dem Bruchberg",
-    "lat": 51.7836,
-    "lng": 10.5,
+    "lat": 51.7903,
+    "lng": 10.5029,
     "cat": "natur",
     "region": "Westharz",
-    "desc": "Die waldlose Kuppe aus Quarzit auf dem zweithöchsten Berg Niedersachsens (Bruchberg). Bietet bei gutem Wetter atemberaubende Ausblicke.",
+    "desc": "Die waldlose Kuppe aus Quarzit auf dem zweithöchsten Berg Niedersachsens (Bruchberg). Bei gutem Wetter weite Ausblicke.",
     "web": "https://www.harzer-wandernadel.de/en/stamping-points/overview-map/stamping-point-135-wolfswarte-nph/",
     "parken": "Kleiner Wanderparkplatz an der L 504 zwischen Torfhaus und Altenau",
     "dauer": "ca. 1,5 Std.",
@@ -124,7 +124,7 @@ const HARZ_POIS = [
     "lng": 10.7873,
     "cat": "kultur",
     "region": "Ostharz",
-    "desc": "Nur 2,95m breit und 4,20m hoch, mit einer 1,70m hohen Tür. Zwischen Baulücken errichtet, diente es einst als Wohnung für bis zu 11 Personen.",
+    "desc": "Nur 2,95 m breit, bis zur Dachtraufe 4,20 m hoch, mit einer 1,70 m hohen Tür. Zwischen Baulücken errichtet, diente es einst als Wohnung für bis zu 11 Personen.",
     "web": "https://www.wernigerode-tourismus.de/poi/museum-kleinstes-haus",
     "dauer": "ca. 15–30 Min.",
     "kinder": "bedingt",
@@ -241,8 +241,8 @@ const HARZ_POIS = [
   },
   {
     "name": "Wurmberg",
-    "lat": 51.7277,
-    "lng": 10.6172,
+    "lat": 51.7565,
+    "lng": 10.6182,
     "cat": "erlebnis",
     "region": "Westharz",
     "desc": "Höchster Berg Niedersachsens bei Braunlage. Beliebtes Skigebiet und im Sommer ideal für rasante Fahrten mit dem Monsterroller oder Seilbahn.",
@@ -317,7 +317,7 @@ const HARZ_POIS = [
   {
     "name": "Josephskreuz",
     "lat": 51.5806,
-    "lng": 10.9361,
+    "lng": 11.0057,
     "cat": "natur",
     "region": "Südharz",
     "desc": "Das größte eiserne Doppelkreuz der Welt auf dem Großen Auerberg bei Stolberg. Die Aussichtsplattform bietet eine herrliche Fernsicht.",
@@ -338,7 +338,7 @@ const HARZ_POIS = [
     "lng": 11.3108,
     "cat": "natur",
     "region": "Südharz",
-    "desc": "Die größte Rosensammlung der Welt in Sangerhausen. Erlebe rund 8.600 verschiedene Rosenarten auf einem 13 Hektar großen Parkgelände.",
+    "desc": "Die größte Rosensammlung der Welt in Sangerhausen. Rund 8.700 Rosenarten und -sorten auf einem 13 Hektar großen Parkgelände.",
     "web": "https://www.europa-rosarium.de/de/",
     "parken": "Parkplatz Sotterhäuser Weg, Sangerhausen (Navi-Adresse)",
     "dauer": "2–3 Std.",
@@ -396,7 +396,7 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "Bikepark",
       "lift": "Sessellift Bocksberg-Seilbahn",
-      "detail": "8 Hauptstrecken blau→schwarz: Böckchen & Wilder Drache (flowig/Freeride), Sprungbock (Jumpline), Bock auf Wurzeln (Roots), Wilder Bock (steiler DH, keine Umfahrung) + Northshore-Line. Saison ~Ende April–Anfang November, Tagesticket ~30 €."
+      "detail": "8 Strecken laut Betreiber: Böckchen (blau, Singletrail), Sprungböckchen (blau/rot, Mini-Jumpline/BikerX), Wilder Drache (blau/rot, Freeride), Bock auf Wurzeln (Roots), Sprungbock (rot/schwarz, Jumpline), Wilder Keiler (schwarz, DH-Race), Wilder Fuchs (schwarz, Race Track), Wilder Bock (schwarz, DH). Saison 2026 ab 28.03.2026."
     },
     "confidence": "HIGH",
     "web": "https://www.bikepark-hahnenklee.de/",
@@ -413,15 +413,15 @@ const HARZ_POIS = [
   },
   {
     "name": "Bikepark Braunlage · Wurmberg",
-    "lat": 51.7195,
-    "lng": 10.6065,
+    "lat": 51.7319,
+    "lng": 10.6129,
     "cat": "mtb",
     "region": "Westharz",
     "desc": "Bikepark an der Wurmberg-Seilbahn (~22 km östlich). Längste Abfahrten im Harz, ~400 Hm am Stück.",
     "mtb": {
       "typ": "Bikepark",
       "lift": "Wurmbergseilbahn (2.800 m, längste Seilbahn Norddeutschlands)",
-      "detail": "4 Hauptlinien: Freeride (rot, ~3,4 km, Holz/Sprünge/Anlieger), Snakebite (mittel, Steinfelder), Enduro (Wurzel-Singletrail), Evil Rocks (schwer, extrem verblockt, Drops). DH-Linie bis ~4,4 km. Saison Mai–Oktober, Tageskarte 45 €. Vor Anfahrt Streckenfreigabe prüfen."
+      "detail": "Über 18 Streckenkilometer, Tageskarte 38 € (bis 17 Jahre 27 €), laut braunlage.de; die Betreiberseite war nicht erreichbar. Vor Anfahrt Streckenfreigabe prüfen."
     },
     "confidence": "HIGH",
     "web": "https://www.braunlage.de/poi/bikepark-braunlage",
@@ -445,8 +445,8 @@ const HARZ_POIS = [
     "desc": "Naturbelassener Bikepark am Matthias-Schmidt-Berg, nur ~14 km von Scharzfeld – der nächste Lift-Park.",
     "mtb": {
       "typ": "Bikepark",
-      "lift": "Sessellift Albert-Lift",
-      "detail": "6 Strecken / ~12 km: Flowtrail (blau, Anlieger/Wellen), MSB-X-2 & X-3 (Singletrails), Jumpline (Tables/Doubles), Northshore/Hexentreppe (rot), Enduro/Stollentour (~4 km) + Schwarze Sechs (DH). Sehr einsteiger- und fortgeschrittenenfreundlich, kurze Liftwartezeiten."
+      "lift": "Sesselbahn der Alberti-Lift GmbH",
+      "detail": "9 Trails laut Betreiber, vom Flowtrail über Super Enduro bis zur Jump Line. Geöffnet Mi–So 9:15–17:15 Uhr, Saison 2026 bis 01.11.2026."
     },
     "confidence": "HIGH",
     "web": "https://www.bikepark-andreasberg.de/",
@@ -462,15 +462,15 @@ const HARZ_POIS = [
   },
   {
     "name": "Racepark Schulenberg",
-    "lat": 51.8155,
-    "lng": 10.436,
+    "lat": 51.8472,
+    "lng": 10.4276,
     "cat": "mtb",
     "region": "Westharz",
     "desc": "Insider-Bikepark an der Okertalsperre (~20 km nordöstlich). Gilt als technisch anspruchsvollster Spot im Harz.",
     "mtb": {
       "typ": "Bikepark",
       "lift": "Schlepplift (Ankerbügel)",
-      "detail": "6 Strecken: Down(c)Hiller (glattester Flowtrail im Harz), BX/X-Cross (700 m, Doubles), Freeride (Wurzeln/Northshore), Downhill (~1,2–1,4 km, Roadgap ~4 m, schwerster DH im Harz), Hiddenshred (Enduro). Nur Sa/So + Feiertage, 10–16 Uhr, Tageskarte 25 €. Kein PKW hoch – Parken an der Brücke."
+      "detail": "Strecken laut Betreiber u. a. Flowtrail (längste, fast 3,5 km), Stempelstieg (Downhill mit Gap), BikerCross und OnAir (große Jumpline). Geöffnet an Wochenenden, Feiertagen und Brückentagen, im Sommer 10–18 Uhr. Tageskarte 35 €, Halbtag 25 €."
     },
     "confidence": "HIGH",
     "web": "https://www.outdoorwerkstatt.eu/",
@@ -487,15 +487,15 @@ const HARZ_POIS = [
   },
   {
     "name": "Devils Trail (Etappenstart Hanskühnenburg)",
-    "lat": 51.751,
-    "lng": 10.346,
+    "lat": 51.7281,
+    "lng": 10.4032,
     "cat": "mtb",
     "region": "Südharz",
-    "desc": "Ausgeschilderter MTB-Fernweg als Rundkurs – führt direkt durchs Gebiet um Scharzfeld.",
+    "desc": "Ausgeschilderter MTB-Fernweg als Rundkurs durch den Südharz.",
     "mtb": {
       "typ": "MTB-Fernweg / Rundkurs",
       "lift": "–",
-      "detail": "184 km / 4.300 Hm, 8 Etappen, komplett im Gelände markiert. Bündelt die besten Trail-Abschnitte des Südharzes (u.a. Schalke→Hanskühnenburg→Großer Knollen→Stöberhai→Braunlage). 8 Stempelstellen der Harzer Wandernadel. Ideal als rote Linie zum Kennenlernen der Region."
+      "detail": "184 km laut Betreiber. Die Etappe Hanskühnenburg–Großer Knollen läuft überwiegend auf gut fahrbaren Schotterstraßen; danach Stöberhai, Matthias-Schmidt-Berg und Wurmberg."
     },
     "confidence": "HIGH",
     "web": "https://devils-trail.de/strecke-1-3/",
@@ -512,15 +512,15 @@ const HARZ_POIS = [
   },
   {
     "name": "Tante-Ju-Trail",
-    "lat": 51.743,
-    "lng": 10.365,
+    "lat": 51.7376,
+    "lng": 10.3917,
     "cat": "mtb",
     "region": "Südharz",
     "desc": "Das Highlight der Hanskühnenburg-Runde – wurzeliger, technisch-flowiger Singletrail-Abstieg.",
     "mtb": {
       "typ": "Singletrail",
       "lift": "–",
-      "detail": "~3–4 km, ca. 400 Hm bergab, S1–S2. Abfahrt vom Hanskühnenburg-Plateau Richtung Sieber/Lonau. Voll gefedert klar im Vorteil."
+      "detail": "Ca. 400 Hm bergab, S1–S2. Nahe der Hanskühnenburg, laut Komoot im Nationalpark Harz. Voll gefedert klar im Vorteil."
     },
     "confidence": "MED-HIGH",
     "parken": "Parkplatz am Ortsende von Lonau (Sackgasse), Runde über Hanskühnenburg",
@@ -567,7 +567,7 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "Singletrail",
       "lift": "–",
-      "detail": "~300 Hm bergab, S1. Südseitiger Knollen-Hang, mündet bei Sieber. Lässt sich gut mit Goldenke und Brackberg zu einer Sieber-Runde verketten."
+      "detail": "~300 Hm bergab, S1. Mündet bei Sieber. Lässt sich gut mit Goldenke und Brackberg zu einer Sieber-Runde verketten."
     },
     "confidence": "MED",
     "parken": "Parkplatz am Ortsende von Lonau (Sackgasse), Runde über Sieber",
@@ -581,15 +581,15 @@ const HARZ_POIS = [
   },
   {
     "name": "Goldenke-Trail",
-    "lat": 51.718,
-    "lng": 10.352,
+    "lat": 51.7121,
+    "lng": 10.4219,
     "cat": "mtb",
     "region": "Südharz",
     "desc": "Kurzer, feiner Verbindungstrail zwischen Lonau und Sieber.",
     "mtb": {
       "typ": "Singletrail",
       "lift": "–",
-      "detail": "Kurzer S1-Trail ins Goldenketal: griffiger Waldboden, kurze Stein-/Wurzelpassagen, kleine Spitzkehren. Laut Trailtech 'leider viel zu kurz'."
+      "detail": "Kurzer S1-Trail ins Goldenketal: griffiger Waldboden, kurze Stein- und Wurzelpassagen, kleine Spitzkehren."
     },
     "confidence": "MED",
     "parken": "Parkplatz am Ortsende von Lonau (Sackgasse)",
@@ -602,11 +602,11 @@ const HARZ_POIS = [
   },
   {
     "name": "Brackberg-Trail",
-    "lat": 51.709,
-    "lng": 10.338,
+    "lat": 51.7112,
+    "lng": 10.3678,
     "cat": "mtb",
     "region": "Südharz",
-    "desc": "Schneller Speedtrail bei Lonau – nicht technisch, dafür Tempo.",
+    "desc": "Schneller Speedtrail am Braakberg bei Lonau, nicht technisch, dafür Tempo.",
     "mtb": {
       "typ": "Singletrail",
       "lift": "–",
@@ -624,8 +624,8 @@ const HARZ_POIS = [
   },
   {
     "name": "Hanskühnenburg (Trail-Hub)",
-    "lat": 51.751,
-    "lng": 10.346,
+    "lat": 51.7281,
+    "lng": 10.4032,
     "cat": "mtb",
     "region": "Südharz",
     "desc": "Baude & Aussichtsturm am Acker-Höhenzug – Drehscheibe für mehrere Trail-Abfahrten.",
@@ -648,15 +648,15 @@ const HARZ_POIS = [
   },
   {
     "name": "Großer Knollen (Trail-Hub)",
-    "lat": 51.705,
-    "lng": 10.3725,
+    "lat": 51.6674,
+    "lng": 10.4303,
     "cat": "mtb",
     "region": "Südharz",
     "desc": "Aussichtsturm & Baude – Startpunkt für Südharz-Trails direkt vor der Haustür von Scharzfeld.",
     "mtb": {
       "typ": "Trail-Knotenpunkt",
       "lift": "–",
-      "detail": "687 m, nordöstlich von Herzberg. Start des Paradies-Trails und der Knollen-Double-Tour (~32 km / 900 Hm, S1). Gut mit der Volksbank-Arena-Beschilderung kombinierbar."
+      "detail": "687 m, nordöstlich von Herzberg. Gut mit der Volksbank-Arena-Beschilderung kombinierbar."
     },
     "confidence": "HIGH",
     "web": "https://www.harzer-wandernadel.de/stempelstellen/uebersichtskarte/stempelstelle-150-grosser-knollen/",
@@ -672,15 +672,15 @@ const HARZ_POIS = [
   },
   {
     "name": "Ravensberg-Trails (Bad Sachsa)",
-    "lat": 51.6225,
-    "lng": 10.568,
+    "lat": 51.6214,
+    "lng": 10.5269,
     "cat": "mtb",
     "region": "Südharz",
     "desc": "Trail-Berg am Südharzrand bei Bad Sachsa mit teils schwerem Trailanstieg.",
     "mtb": {
       "typ": "Tour-Trails",
       "lift": "–",
-      "detail": "Mittelschwere Bergtour mit Trail-Passagen über Baudensteig und Försterstieg. Volksbank-Arena-Routen BS1/BS2/BL2-4/SW2 führen vorbei. Stöberhai als zweiter Gipfel mit Trail-Abfahrt in der Nähe."
+      "detail": "Mittelschwere Bergtour mit Trail-Passagen über Baudensteig und Försterstieg. Die Volksbank-Arena-Route BS 2 Steinaer Bachtour führt hinauf (20,7 km, 496 Hm, mittel). Stöberhai als zweiter Gipfel mit Trail-Abfahrt in der Nähe."
     },
     "confidence": "HIGH",
     "web": "https://www.volksbank-arena-harz.de/routen/routen-ab-bad-sachsa/bs-2-steinaer-bachtour",
@@ -696,7 +696,7 @@ const HARZ_POIS = [
     "konfidenz": "Hoch"
   },
   {
-    "name": "VBA · HE 2 Waldherr-Tour (Herzberg)",
+    "name": "VBA · HE 2 Waldgrafen-Runde (Herzberg)",
     "lat": 51.654,
     "lng": 10.341,
     "cat": "mtb",
@@ -705,7 +705,7 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "Ausgeschilderte MTB-Route",
       "lift": "–",
-      "detail": "Mittelschwere Rundroute, als 'Singletrail-Route' markiert (erhöhter Trail-Anteil). Start an der Tourist-Info am Marktplatz. Daneben HE 1 'Tour der Giganten' (44 km / 1.350 Hm, schwer) ab demselben Startort."
+      "detail": "21,6 km / 371 Hm, mittel, als Singletrail-Route markiert (erhöhter Trail-Anteil). Start an der Tourist-Info am Marktplatz. Daneben HE 1 „Tour der Giganten“ (41,7 km / 914 Hm) ab demselben Startort."
     },
     "confidence": "HIGH",
     "web": "https://www.volksbank-arena-harz.de/routen/routen-ab-herzberg/he-2-waldgrafen-runde",
@@ -725,11 +725,11 @@ const HARZ_POIS = [
     "lng": 10.521,
     "cat": "mtb",
     "region": "Westharz",
-    "desc": "Schwere Singletrail-Route der Volksbank Arena ab St. Andreasberg.",
+    "desc": "Singletrail-Route der Volksbank Arena ab St. Andreasberg.",
     "mtb": {
       "typ": "Ausgeschilderte MTB-Route",
       "lift": "–",
-      "detail": "21 km / 916 Hm, schwer, als Singletrail-Route markiert. Technischer Trail über Baumstämme zwischen Oderteich und Sonnenberg – bei Nässe heikel. 5 weitere A-Routen ab St. Andreasberg."
+      "detail": "20,5 km / 318 Hm, mittel. Fahrtechnisch anspruchsvoller Bohlen-Trail zwischen Oderteich und Sonnenberg, laut Betreiber gefährlich bei Nässe. Ab St. Andreasberg gibt es die Routen A 1 bis A 5."
     },
     "confidence": "HIGH",
     "web": "https://www.volksbank-arena-harz.de/routen/routen-ab-st-andreasberg/a-1-sonnenberg-rundtour",
@@ -744,15 +744,15 @@ const HARZ_POIS = [
   },
   {
     "name": "VBA · O 1 Wild Man's Trail (Clausthal)",
-    "lat": 51.803,
-    "lng": 10.339,
+    "lat": 51.817,
+    "lng": 10.3361,
     "cat": "mtb",
     "region": "Westharz",
     "desc": "Schwere Singletrail-Route der Volksbank Arena ab Clausthal-Zellerfeld.",
     "mtb": {
       "typ": "Ausgeschilderte MTB-Route",
       "lift": "–",
-      "detail": "31 km / 968 Hm, schwer, als Singletrail-Route markiert. Einer von ~11 O-Routen im Oberharz rund um Clausthal-Zellerfeld/Altenau – das dichteste Netz ausgeschilderter Touren der Region."
+      "detail": "28,9 km / 811 Hm, schwer, als Singletrail-Route markiert. Start am Oberharzer Bergwerksmuseum. Einer von ~11 O-Routen im Oberharz rund um Clausthal-Zellerfeld/Altenau."
     },
     "confidence": "HIGH",
     "web": "https://www.volksbank-arena-harz.de/routen/routen-ab-clausthal-zellerfeld/o-1-wild-mans-trail",

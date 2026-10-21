@@ -13,8 +13,9 @@
 
                    web, parken, dauer, kinder, kinderHinweis, quellen, konfidenz
 
-   --update  = vorhandene POIs (Abgleich über name) um praktische Angaben
-               ergänzen; nur die Felder aus INFO_FELDER, null/"" entfernt ein Feld.
+   --update  = vorhandene POIs (Abgleich über name) ergänzen oder korrigieren:
+               INFO_FELDER sowie lat, lng, desc, mtb; neuerName benennt um.
+               null/"" entfernt ein Feld. Andere Felder (z. B. beleg) werden ignoriert.
    --dry-run = nur prüfen + geocoden + anzeigen, pois.js NICHT schreiben.
    Regeln für alle Felder: poi-schema.mjs.
 
@@ -108,18 +109,20 @@ if (update) {
   const next = POIS.map((p) => ({ ...p }));
   const probleme = [];
   let geaendert = 0;
+  const FELDER = [...INFO_FELDER, "lat", "lng", "desc", "mtb", "neuerName"];
   for (const raw of input) {
     const ziel = next.find((p) => p.name.toLowerCase() === String(raw.name || "").toLowerCase());
     if (!ziel) { probleme.push(`✗ "${raw.name || "?"}": kein POI mit diesem Namen`); continue; }
-    for (const k of INFO_FELDER) {
+    for (const k of FELDER.slice(0, -1)) {
       if (!(k in raw)) continue;
       if (raw[k] == null || raw[k] === "") delete ziel[k];
       else ziel[k] = raw[k];
     }
+    if (raw.neuerName) ziel.name = raw.neuerName;
     const f = fehler(ziel, CATS);
     if (f.length) { probleme.push(...f.map((x) => `✗ ${x}`)); continue; }
     geaendert++;
-    console.log(`• ${ziel.name}: ${INFO_FELDER.filter((k) => ziel[k] != null).join(", ")}`);
+    console.log(`• ${ziel.name}: ${Object.keys(raw).filter((k) => FELDER.includes(k)).join(", ")}`);
   }
   if (probleme.length) { console.log("\n=== Hinweise ==="); probleme.forEach((n) => console.log(n)); }
   if (probleme.length || dryRun) {

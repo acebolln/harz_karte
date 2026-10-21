@@ -1,5 +1,24 @@
 # Progress — Harz Highlights Karte
 
+## 2026-10-21
+
+### Completed Tasks
+- Restyled the map in the cbb-digital design (dark header, paper body, self-hosted Space Grotesk/Inter, vendored Leaflet 1.9.4). Moved the site into `public/`; Vercel serves only that folder.
+- Added a basemap switch: terrain (OpenTopoMap, default), satellite (Esri World Imagery with labels), street (CARTO Voyager). Pin colours retuned for contrast (white text ≥ 4.5:1, tested).
+- Added practical info for all 36 POIs (web, parking, duration, child suitability, sources, confidence), researched by three agents with sources.
+- Fact-checked and corrected 22 POIs against OSM and operator pages (`docs/korrekturen-2026-10-21.json`, each with a `beleg`): 13 pin positions moved, refuted figures removed (e.g. Titan-RT 485.5 m → 458 m), unverifiable claims dropped.
+- Added tests (`npm test`): data schema, page assets and third-party hosts, Playwright layout sweep 360–1440 px, mobile tap targets, popup flow.
+- `add-poi.mjs --update` corrects existing POIs (info fields, lat/lng/desc/mtb, `neuerName`); shared field rules in `poi-schema.mjs`.
+
+### Technical Decisions
+- Stays plain static HTML/JS: documented exception to the cbb-digital stack (one page, one data file).
+- Only verified content goes into the data. What cannot be sourced is dropped, not guessed.
+- Map stays public, no login gate; footer links to the cbb-digital Impressum and Datenschutz.
+
+### Current State
+- Tests: 12/12 green. Branch `feature/cbb-design`, not yet pushed; domain `harz-landkarte.cbb-digital.com` follows after the merge.
+- Open: privacy page may need the tile providers; MTB rules in the Nationalpark (Tante-Ju-Trail) not checked; Devils Trail and Hanskühnenburg hub share one position.
+
 ## 2026-06-14 14:00
 
 ### Completed Tasks

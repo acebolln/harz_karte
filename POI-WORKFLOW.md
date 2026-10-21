@@ -49,6 +49,12 @@ Die Karte wächst über eine zentrale Datendatei. So kommen neue Ziele und prakt
    ```
 2. `node add-poi.mjs info.json --update --dry-run`, danach ohne `--dry-run`.
 
+`--update` korrigiert auch `lat`, `lng`, `desc` und `mtb`; `neuerName` benennt einen POI um. Andere Felder
+übernimmt das Skript nicht. So kann jede Korrektur ein `beleg` mit Quelle und altem Wert tragen; die Eingabe
+bleibt als Nachweis in `docs/` liegen (Beispiel: `docs/korrekturen-2026-10-21.json`).
+
+Regel für Inhalte: Nur aufnehmen, was an einer Quelle geprüft ist. Was sich nicht belegen lässt, fällt weg.
+
 ## Veröffentlichen
 `npm test`, dann Branch, Commit und Pull Request. Vercel baut für den PR eine Vorschau und nach dem Merge die
 Produktion.
