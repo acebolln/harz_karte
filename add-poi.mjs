@@ -3,6 +3,7 @@
    ---------------------------------------------------------------------
    Aufruf:
      node add-poi.mjs <eingabe.json> [--dry-run]
+     node add-poi.mjs <info.json> --update [--dry-run]
 
    <eingabe.json> = ein POI-Objekt ODER ein Array von POI-Objekten.
    Pflichtfelder : name, cat, region, desc
@@ -10,7 +11,13 @@
                    query           (alternativer Geocoding-Text statt name)
                    mtb {typ,lift,detail}, confidence
 
+                   web, parken, dauer, kinder, kinderHinweis, quellen, konfidenz
+
+   --update  = vorhandene POIs (Abgleich über name) ergänzen oder korrigieren:
+               INFO_FELDER sowie lat, lng, desc, mtb; neuerName benennt um.
+               null/"" entfernt ein Feld. Andere Felder (z. B. beleg) werden ignoriert.
    --dry-run = nur prüfen + geocoden + anzeigen, pois.js NICHT schreiben.
+   Regeln für alle Felder: poi-schema.mjs.
 
    Beispiel-Eingabe:
      [{ "name":"Brocken", "cat":"natur", "region":"Ostharz",
@@ -19,9 +26,10 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
+import { fehler, INFO_FELDER } from "./poi-schema.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const POIS_FILE = path.join(__dirname, "pois.js");
+const POIS_FILE = path.join(__dirname, "public", "pois.js");
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ----------  Daten laden (IIFE setzt globalThis.HARZ_*)  ---------- */
@@ -86,6 +94,7 @@ root.HARZ_POIS = HARZ_POIS;
 /* ----------  Argumente  ---------- */
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
+const update = args.includes("--update");
 const inputPath = args.find((a) => !a.startsWith("--"));
 if (!inputPath) {
   console.error("Aufruf: node add-poi.mjs <eingabe.json> [--dry-run]");
@@ -94,6 +103,36 @@ if (!inputPath) {
 
 let input = JSON.parse(await readFile(inputPath, "utf8"));
 if (!Array.isArray(input)) input = [input];
+
+/* ----------  --update: Angaben an vorhandene POIs hängen  ---------- */
+if (update) {
+  const next = POIS.map((p) => ({ ...p }));
+  const probleme = [];
+  let geaendert = 0;
+  const FELDER = [...INFO_FELDER, "lat", "lng", "desc", "mtb", "neuerName"];
+  for (const raw of input) {
+    const ziel = next.find((p) => p.name.toLowerCase() === String(raw.name || "").toLowerCase());
+    if (!ziel) { probleme.push(`✗ "${raw.name || "?"}": kein POI mit diesem Namen`); continue; }
+    for (const k of FELDER.slice(0, -1)) {
+      if (!(k in raw)) continue;
+      if (raw[k] == null || raw[k] === "") delete ziel[k];
+      else ziel[k] = raw[k];
+    }
+    if (raw.neuerName) ziel.name = raw.neuerName;
+    const f = fehler(ziel, CATS);
+    if (f.length) { probleme.push(...f.map((x) => `✗ ${x}`)); continue; }
+    geaendert++;
+    console.log(`• ${ziel.name}: ${Object.keys(raw).filter((k) => FELDER.includes(k)).join(", ")}`);
+  }
+  if (probleme.length) { console.log("\n=== Hinweise ==="); probleme.forEach((n) => console.log(n)); }
+  if (probleme.length || dryRun) {
+    console.log(`\n${dryRun ? "[dry-run] " : ""}${geaendert} POI(s) geprüft, pois.js bleibt unverändert.`);
+    process.exit(probleme.length ? 1 : 0);
+  }
+  await writeFile(POIS_FILE, serialize(CATS, next), "utf8");
+  console.log(`\n✓ ${geaendert} POI(s) ergänzt.`);
+  process.exit(0);
+}
 
 /* ----------  Verarbeiten  ---------- */
 const toAdd = [];
@@ -122,6 +161,10 @@ for (const raw of input) {
     poi.lat = g.lat; poi.lng = g.lng; poi._geo = g.display;
   }
   delete poi.query;
+
+  const { _geo, ...ohneGeo } = poi;
+  const f = fehler(ohneGeo, CATS);
+  if (f.length) { notes.push(...f.map((x) => `✗ ${x}`)); continue; }
 
   const dup = findDuplicate(poi);
   if (dup) { notes.push(`⚠ "${poi.name}": mögliches Duplikat (${dup.type}) zu "${dup.p.name}" – übersprungen`); continue; }
@@ -153,4 +196,4 @@ if (!clean.length) {
 const next = [...POIS, ...clean];
 await writeFile(POIS_FILE, serialize(CATS, next), "utf8");
 console.log(`\n✓ ${clean.length} POI(s) hinzugefügt. Neue Gesamtzahl: ${next.length}.`);
-console.log("→ Danach committen & deployen (git add/commit/push bzw. vercel deploy --prod).");
+console.log("→ Danach Branch, Commit und Pull Request; Vercel deployt nach dem Merge.");

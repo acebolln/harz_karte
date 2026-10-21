@@ -1,4 +1,6 @@
 .vercel
-.claude/
+.claude/*
+!.claude/settings.json
 .playwright-mcp/
 _*.json
+node_modules/

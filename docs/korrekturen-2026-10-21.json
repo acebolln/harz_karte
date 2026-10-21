@@ -1,0 +1,190 @@
+[
+  {
+    "name": "Rappbodetalsperre & Titan-RT",
+    "desc": "Hängeseilbrücke Titan-RT über der Rappbodetalsperre, 458 m lang und laut Betreiber eine der längsten. Extra: GigaSwing mit 70 m freiem Fall (ab 10 Jahren) oder Aussichtspunkt Rotestein.",
+    "beleg": "harzdrenalin.de/abenteuer/titan-rt/ (458 Meter, eine der längsten), /gigaswing/ (70 m freier Fall, mindestens 10 Jahre). Vorher 485,5 m, drittlängste, 64 m Tiefe; höchste Staumauer beim Betreiber nicht belegt, gestrichen."
+  },
+  {
+    "name": "Stabkirche Hahnenklee",
+    "desc": "Die Gustav-Adolf-Stabkirche, erbaut 1907–1908. Typisch norwegische Bauweise im Goslarer Stadtteil Hahnenklee. Duftet innen herrlich nach Holz.",
+    "beleg": "stabkirche.de: erbaut 1907-1908"
+  },
+  {
+    "name": "Wolfswarte auf dem Bruchberg",
+    "lat": 51.7903,
+    "lng": 10.5029,
+    "desc": "Die waldlose Kuppe aus Quarzit auf dem zweithöchsten Berg Niedersachsens (Bruchberg). Bei gutem Wetter weite Ausblicke.",
+    "beleg": "OSM natural=peak Wolfswarte 51.7903, 10.5029; vorher ca. 750 m daneben"
+  },
+  {
+    "name": "Das Kleinste Haus in Wernigerode",
+    "desc": "Nur 2,95 m breit, bis zur Dachtraufe 4,20 m hoch, mit einer 1,70 m hohen Tür. Zwischen Baulücken errichtet, diente es einst als Wohnung für bis zu 11 Personen.",
+    "beleg": "wernigerode-tourismus.de/poi/museum-kleinstes-haus: bis zur Dachtraufe 4,20 m, 2,95 m breit, 1,70 m hohe Tür"
+  },
+  {
+    "name": "Wurmberg",
+    "lat": 51.7565,
+    "lng": 10.6182,
+    "beleg": "OSM Wurmberg (Gipfel) 51.7565, 10.6182; vorher im Ort Braunlage, 3,2 km entfernt"
+  },
+  {
+    "name": "Josephskreuz",
+    "lat": 51.5806,
+    "lng": 11.0057,
+    "beleg": "OSM Josephskreuz, Stolberg 51.5806, 11.0057; vorher 4,8 km westlich"
+  },
+  {
+    "name": "Europa-Rosarium",
+    "desc": "Die größte Rosensammlung der Welt in Sangerhausen. Rund 8.700 Rosenarten und -sorten auf einem 13 Hektar großen Parkgelände.",
+    "beleg": "europa-rosarium.de/de/: 8700 Rosenarten und Rosensorten"
+  },
+  {
+    "name": "Bikepark Hahnenklee · Bocksberg",
+    "mtb": {
+      "typ": "Bikepark",
+      "lift": "Sessellift Bocksberg-Seilbahn",
+      "detail": "8 Strecken laut Betreiber: Böckchen (blau, Singletrail), Sprungböckchen (blau/rot, Mini-Jumpline/BikerX), Wilder Drache (blau/rot, Freeride), Bock auf Wurzeln (Roots), Sprungbock (rot/schwarz, Jumpline), Wilder Keiler (schwarz, DH-Race), Wilder Fuchs (schwarz, Race Track), Wilder Bock (schwarz, DH). Saison 2026 ab 28.03.2026."
+    },
+    "beleg": "bikepark-hahnenklee.de: Streckenliste, Eröffnung 28.03.2026; Northshore-Line dort nicht genannt, Saisonende und Preis nicht geprüft, gestrichen"
+  },
+  {
+    "name": "Bikepark Braunlage · Wurmberg",
+    "lat": 51.7319,
+    "lng": 10.6129,
+    "mtb": {
+      "typ": "Bikepark",
+      "lift": "Wurmbergseilbahn (2.800 m, längste Seilbahn Norddeutschlands)",
+      "detail": "Über 18 Streckenkilometer, Tageskarte 38 € (bis 17 Jahre 27 €), laut braunlage.de; die Betreiberseite war nicht erreichbar. Vor Anfahrt Streckenfreigabe prüfen."
+    },
+    "beleg": "OSM Wurmbergseilbahn Talstation, Am Amtsweg 5: 51.7319, 10.6129; braunlage.de/poi/bikepark-braunlage: über 18 Streckenkilometer, Tageskarte 38 €. Vorher 4 Hauptlinien, 45 €"
+  },
+  {
+    "name": "Bikepark St. Andreasberg · MSB-X-Trail",
+    "mtb": {
+      "typ": "Bikepark",
+      "lift": "Sesselbahn der Alberti-Lift GmbH",
+      "detail": "9 Trails laut Betreiber, vom Flowtrail über Super Enduro bis zur Jump Line. Geöffnet Mi–So 9:15–17:15 Uhr, Saison 2026 bis 01.11.2026."
+    },
+    "beleg": "bikepark-andreasberg.de: Alberti-Lift GmbH, Mittwoch bis Sonntag 9:15-17:15, Saison bis 01.11.2026; /trails: nummeriert bis 9. Jump Line, 7. Super Enduro"
+  },
+  {
+    "name": "Racepark Schulenberg",
+    "lat": 51.8472,
+    "lng": 10.4276,
+    "mtb": {
+      "typ": "Bikepark",
+      "lift": "Schlepplift (Ankerbügel)",
+      "detail": "Strecken laut Betreiber u. a. Flowtrail (längste, fast 3,5 km), Stempelstieg (Downhill mit Gap), BikerCross und OnAir (große Jumpline). Geöffnet an Wochenenden, Feiertagen und Brückentagen, im Sommer 10–18 Uhr. Tageskarte 35 €, Halbtag 25 €."
+    },
+    "beleg": "OSM Skilift Großer Wiesenberg 51.8472, 10.4276, vorher 3,5 km südlich; outdoorwerkstatt.eu/racepark-schulenberg/ öffnungszeiten, preise, strecken. Vorher Sa/So 10-16 Uhr, 25 €, Parken an der Brücke"
+  },
+  {
+    "name": "Devils Trail (Etappenstart Hanskühnenburg)",
+    "lat": 51.7281,
+    "lng": 10.4032,
+    "desc": "Ausgeschilderter MTB-Fernweg als Rundkurs durch den Südharz.",
+    "mtb": {
+      "typ": "MTB-Fernweg / Rundkurs",
+      "lift": "–",
+      "detail": "184 km laut Betreiber. Die Etappe Hanskühnenburg–Großer Knollen läuft überwiegend auf gut fahrbaren Schotterstraßen; danach Stöberhai, Matthias-Schmidt-Berg und Wurmberg."
+    },
+    "beleg": "OSM Hanskühnenburg 51.7281, 10.4032, vorher 5 km daneben; devils-trail.de: 184 km, /route/: Reihenfolge, /strecke-1-3/: Schotterstraßen. Gestrichen: Scharzfeld, beste Trail-Abschnitte"
+  },
+  {
+    "name": "Tante-Ju-Trail",
+    "lat": 51.7376,
+    "lng": 10.3917,
+    "mtb": {
+      "typ": "Singletrail",
+      "lift": "–",
+      "detail": "Ca. 400 Hm bergab, S1–S2. Nahe der Hanskühnenburg, laut Komoot im Nationalpark Harz. Voll gefedert klar im Vorteil."
+    },
+    "beleg": "komoot.com/de-de/highlight/259197: 51.737556, 10.391736, Nationalpark Harz. Gestrichen: 3-4 km, Richtung Sieber/Lonau"
+  },
+  {
+    "name": "Paradies-Trail",
+    "mtb": {
+      "typ": "Singletrail",
+      "lift": "–",
+      "detail": "~300 Hm bergab, S1. Mündet bei Sieber. Lässt sich gut mit Goldenke und Brackberg zu einer Sieber-Runde verketten."
+    },
+    "beleg": "Gestrichen: Südseitiger Knollen-Hang (Siebertal liegt nordwestlich). Koordinaten unverändert, Trailende nicht belegt"
+  },
+  {
+    "name": "Goldenke-Trail",
+    "lat": 51.7121,
+    "lng": 10.4219,
+    "mtb": {
+      "typ": "Singletrail",
+      "lift": "–",
+      "detail": "Kurzer S1-Trail ins Goldenketal: griffiger Waldboden, kurze Stein- und Wurzelpassagen, kleine Spitzkehren."
+    },
+    "beleg": "OSM Goldenke, Sieber 51.7121, 10.4219, vorher 4-5 km westlich; Trailtech-Zitat nicht auffindbar, gestrichen"
+  },
+  {
+    "name": "Brackberg-Trail",
+    "lat": 51.7112,
+    "lng": 10.3678,
+    "desc": "Schneller Speedtrail am Braakberg bei Lonau, nicht technisch, dafür Tempo.",
+    "beleg": "OSM Braakberg 51.7112, 10.3678 (amtlicher Name), Trailende Campingplatz Lonau 51.6980, 10.3623; vorher 2 km westlich"
+  },
+  {
+    "name": "Hanskühnenburg (Trail-Hub)",
+    "lat": 51.7281,
+    "lng": 10.4032,
+    "beleg": "OSM Hanskühnenburg 51.7281, 10.4032; vorher 5 km nordwestlich"
+  },
+  {
+    "name": "Großer Knollen (Trail-Hub)",
+    "lat": 51.6674,
+    "lng": 10.4303,
+    "mtb": {
+      "typ": "Trail-Knotenpunkt",
+      "lift": "–",
+      "detail": "687 m, nordöstlich von Herzberg. Gut mit der Volksbank-Arena-Beschilderung kombinierbar."
+    },
+    "beleg": "OSM Großer Knollen 51.6674, 10.4303, vorher 5,8 km nordwestlich. Gestrichen: Knollen-Double-Tour 32 km / 900 Hm (nicht auffindbar)"
+  },
+  {
+    "name": "Ravensberg-Trails (Bad Sachsa)",
+    "lat": 51.6214,
+    "lng": 10.5269,
+    "mtb": {
+      "typ": "Tour-Trails",
+      "lift": "–",
+      "detail": "Mittelschwere Bergtour mit Trail-Passagen über Baudensteig und Försterstieg. Die Volksbank-Arena-Route BS 2 Steinaer Bachtour führt hinauf (20,7 km, 496 Hm, mittel). Stöberhai als zweiter Gipfel mit Trail-Abfahrt in der Nähe."
+    },
+    "beleg": "OSM Ravensberg 51.6214, 10.5269, vorher 2,8 km östlich; touren.harzinfo.de BS2: Ravensberg, 20,7 km, 496 hm, Mittel. Gestrichen: Routenliste BL2-4"
+  },
+  {
+    "name": "VBA · HE 2 Waldherr-Tour (Herzberg)",
+    "neuerName": "VBA · HE 2 Waldgrafen-Runde (Herzberg)",
+    "mtb": {
+      "typ": "Ausgeschilderte MTB-Route",
+      "lift": "–",
+      "detail": "21,6 km / 371 Hm, mittel, als Singletrail-Route markiert (erhöhter Trail-Anteil). Start an der Tourist-Info am Marktplatz. Daneben HE 1 „Tour der Giganten“ (41,7 km / 914 Hm) ab demselben Startort."
+    },
+    "beleg": "volksbank-arena-harz.de: HE 2 Waldgrafen-Runde; touren.harzinfo.de HE2: 21,6 km, 371 hm, Mittel; HE1: 41,7 km, 914 hm. Vorher Waldherr-Tour, HE 1 44 km / 1.350 Hm"
+  },
+  {
+    "name": "VBA · A 1 Sonnenberg-Rundtour",
+    "desc": "Singletrail-Route der Volksbank Arena ab St. Andreasberg.",
+    "mtb": {
+      "typ": "Ausgeschilderte MTB-Route",
+      "lift": "–",
+      "detail": "20,5 km / 318 Hm, mittel. Fahrtechnisch anspruchsvoller Bohlen-Trail zwischen Oderteich und Sonnenberg, laut Betreiber gefährlich bei Nässe. Ab St. Andreasberg gibt es die Routen A 1 bis A 5."
+    },
+    "beleg": "touren.harzinfo.de A1: 20,5 km, 318 hm, Mittel; volksbank-arena-harz.de: Bohlen-Trail (gefährlich bei Nässe), A 5 Harte Odertal Runde. Vorher 21 km / 916 Hm, schwer, Baumstämme, 5 weitere"
+  },
+  {
+    "name": "VBA · O 1 Wild Man's Trail (Clausthal)",
+    "lat": 51.817,
+    "lng": 10.3361,
+    "mtb": {
+      "typ": "Ausgeschilderte MTB-Route",
+      "lift": "–",
+      "detail": "28,9 km / 811 Hm, schwer, als Singletrail-Route markiert. Start am Oberharzer Bergwerksmuseum. Einer von ~11 O-Routen im Oberharz rund um Clausthal-Zellerfeld/Altenau."
+    },
+    "beleg": "touren.harzinfo.de O1: 28,9 km, 811 hm, Schwer, Start Bergwerksmuseum; OSM Oberharzer Bergwerksmuseum 51.8170, 10.3361. Vorher 31 km / 968 Hm, 1,6 km südlich. Gestrichen: dichtestes Netz der Region"
+  }
+]
