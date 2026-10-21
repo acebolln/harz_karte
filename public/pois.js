@@ -9,11 +9,11 @@
 const HARZ_CATS = {
   "natur": {
     "label": "Natur & Aussicht",
-    "color": "#2f8f5b"
+    "color": "#277a4d"
   },
   "hoehle": {
     "label": "Höhlen",
-    "color": "#b07d3c"
+    "color": "#8f6328"
   },
   "kultur": {
     "label": "Kultur & Bauwerke",
@@ -21,7 +21,7 @@ const HARZ_CATS = {
   },
   "erlebnis": {
     "label": "Erlebnis & Action",
-    "color": "#d8602f"
+    "color": "#c2501f"
   },
   "mtb": {
     "label": "MTB & Trails",

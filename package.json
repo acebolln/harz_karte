@@ -1,0 +1,12 @@
+{
+  "name": "harz-landkarte",
+  "private": true,
+  "description": "Statische Leaflet-Karte der Harz-Highlights, harz-landkarte.cbb-digital.com",
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\" \"test/layout/*.test.mjs\"",
+    "add-poi": "node add-poi.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.0"
+  }
+}

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Highlights im Harz · Karte</title>
+<meta name="description" content="Ausflugsziele im Harz auf einer Karte: Natur, Höhlen, Kultur, Erlebnis und MTB-Trails, mit Parken, Dauer und Eignung für kleine Kinder." />
+<meta name="theme-color" content="#04262B" />
+
+<!-- Leaflet 1.9.4 und Schriften liegen hier, nichts wird von fremden Servern geladen außer den Kacheln. -->
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+<script src="vendor/leaflet/leaflet.js"></script>
+
+<style>
+  /* ----------  Schriften (wie cbb-digital.com)  ---------- */
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/space-grotesk-latin-500-normal.woff2') format('woff2');}
+  @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/space-grotesk-latin-700-normal.woff2') format('woff2');}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2');}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-latin-600-normal.woff2') format('woff2');}
+
+  /* ----------  Tokens: von cbb-digital.com übernommen, nicht erfinden  ---------- */
+  :root{
+    --cbb-tiefe:#04262B; --cbb-kern:#0E5450; --cbb-auftrieb:#1C8377;
+    --cbb-signal:#93EFD4; --cbb-papier:#FBFAF7; --cbb-text:#1A1A1A;
+    --cbb-verlauf:linear-gradient(135deg,#04262B 0%,#0E5450 55%,#1C8377 100%);
+    --r-btn:4px; --r-card:10px;
+    --s-block:24px; --s-innen:16px; --s-zeile:8px;
+    --disp:'Space Grotesk',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+
+    /* abgeleitet: Graustufen auf Papier */
+    --leise:#55605E; --stumm:#7C8684; --linie:#E4E1D8; --flaeche:#F2F0EA;
+    --schatten:0 6px 22px rgba(4,38,43,.16);
+    --sidebar-w:400px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;margin:0;}
+  body{
+    font-family:var(--body);color:var(--cbb-text);background:var(--cbb-papier);
+    display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased;
+  }
+  button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+  a{color:var(--cbb-kern);}
+  :focus-visible{outline:2.5px solid var(--cbb-auftrieb);outline-offset:2px;}
+  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+  svg{flex-shrink:0;}
+
+  /* ----------  Kopfzeile  ---------- */
+  header{flex-shrink:0;background:var(--cbb-verlauf);color:#EAF4F1;padding:12px var(--s-innen);z-index:30;}
+  .header-inner{display:flex;align-items:center;gap:12px;}
+  .crest{
+    width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+    border:1.5px solid rgba(147,239,212,.4);border-radius:var(--r-card);color:var(--cbb-signal);
+  }
+  .crest svg{width:22px;height:22px;}
+  .header-text{min-width:0;}
+  .header-text h1{margin:0;font-family:var(--disp);font-weight:700;font-size:clamp(1.1rem,2.4vw,1.45rem);line-height:1.2;color:#fff;}
+  .header-text p{margin:2px 0 0;font-size:.8rem;line-height:1.5;color:rgba(234,244,241,.78);}
+  .header-link{
+    margin-left:auto;font-family:var(--disp);font-weight:500;font-size:.85rem;color:var(--cbb-signal);
+    text-decoration:none;padding:10px 0;white-space:nowrap;
+  }
+  .header-link:hover{text-decoration:underline;}
+  @media(max-width:520px){.header-link{display:none;}}
+
+  /* ----------  Mobile: Karte / Liste  ---------- */
+  .segmented{display:none;flex-shrink:0;gap:6px;padding:8px 12px;background:var(--cbb-papier);border-bottom:1px solid var(--linie);z-index:20;}
+  .segmented button{
+    flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;gap:7px;
+    border-radius:var(--r-btn);font-weight:600;font-size:.9rem;color:var(--leise);border:1.5px solid var(--linie);
+  }
+  .segmented button svg{width:17px;height:17px;}
+  .segmented button[aria-selected="true"]{background:var(--cbb-kern);border-color:var(--cbb-kern);color:#fff;}
+
+  /* ----------  Arbeitsbereich  ---------- */
+  .workspace{flex:1;display:flex;min-height:0;}
+
+  /* ----------  Seitenleiste  ---------- */
+  #panel-list{
+    width:var(--sidebar-w);flex-shrink:0;background:var(--cbb-papier);border-right:1px solid var(--linie);
+    display:flex;flex-direction:column;min-height:0;z-index:10;
+  }
+  .list-controls{padding:var(--s-innen) var(--s-innen) 12px;border-bottom:1px solid var(--linie);}
+
+  .search{position:relative;}
+  .search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--stumm);pointer-events:none;}
+  .search input{
+    width:100%;min-height:44px;padding:10px 44px 10px 40px;font:inherit;font-size:.95rem;color:var(--cbb-text);
+    background:#fff;border:1.5px solid var(--linie);border-radius:var(--r-btn);
+  }
+  .search input::placeholder{color:var(--stumm);}
+  .search input:focus{border-color:var(--cbb-auftrieb);outline:none;}
+  .search-clear{
+    position:absolute;right:0;top:0;width:44px;height:44px;display:none;align-items:center;justify-content:center;color:var(--leise);
+  }
+  .search-clear.show{display:flex;}
+
+  /* Filter-Chips */
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 11px;
+    border-radius:var(--r-btn);font-size:.82rem;font-weight:600;color:var(--leise);
+    background:#fff;border:1.5px solid var(--linie);
+  }
+  .chip .dot{width:10px;height:10px;border-radius:50%;background:var(--c,var(--stumm));}
+  .chip .cnt{font-weight:600;color:var(--stumm);font-variant-numeric:tabular-nums;}
+  .chip:hover{border-color:var(--stumm);}
+  .chip[aria-pressed="true"]{color:#fff;border-color:transparent;background:var(--c,var(--cbb-kern));}
+  .chip[aria-pressed="true"] .dot{background:rgba(255,255,255,.85);}
+  .chip[aria-pressed="true"] .cnt{color:rgba(255,255,255,.8);}
+  @media(pointer:coarse){.chip{min-height:44px;}}
+
+  /* Statuszeile */
+  .list-status{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;margin-top:10px;font-size:.82rem;color:var(--stumm);}
+  .list-status .count{font-weight:600;color:var(--leise);}
+  .toggles{display:flex;gap:6px;flex-wrap:wrap;}
+  .toggle{
+    display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 11px;border-radius:var(--r-btn);
+    font-size:.82rem;font-weight:600;color:var(--leise);background:#fff;border:1.5px solid var(--linie);
+  }
+  .toggle svg{width:16px;height:16px;}
+  .toggle[aria-pressed="true"]{background:var(--cbb-kern);border-color:var(--cbb-kern);color:#fff;}
+  .toggle[hidden]{display:none;}
+  @media(pointer:coarse){.toggle{min-height:44px;}}
+
+  /* Liste */
+  #poi-list{flex:1;overflow-y:auto;padding:8px;list-style:none;margin:0;}
+  #poi-list li{margin-bottom:4px;}
+  .poi-card{
+    width:100%;text-align:left;display:flex;gap:12px;align-items:flex-start;padding:12px;
+    border-radius:var(--r-card);border:1.5px solid transparent;transition:background .14s,border-color .14s;
+  }
+  .poi-card:hover{background:var(--flaeche);}
+  .poi-card[aria-pressed="true"]{background:color-mix(in srgb,var(--c) 8%,#fff);border-color:color-mix(in srgb,var(--c) 40%,transparent);}
+  .poi-num{
+    flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.82rem;font-variant-numeric:tabular-nums;
+  }
+  .poi-body{min-width:0;flex:1;display:block;}
+  .poi-title{display:block;font-family:var(--disp);font-weight:500;font-size:1rem;line-height:1.25;margin-bottom:4px;}
+  .poi-meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-bottom:4px;font-size:.75rem;font-weight:600;color:var(--leise);}
+  .poi-meta .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:5px;}
+  .poi-dist{color:var(--cbb-auftrieb);font-variant-numeric:tabular-nums;}
+  .poi-desc{
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    font-size:.82rem;line-height:1.5;color:var(--leise);
+  }
+  .poi-facts{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:6px;font-size:.75rem;color:var(--leise);}
+  .poi-facts span{display:inline-flex;align-items:center;gap:4px;}
+  .poi-facts svg{width:14px;height:14px;color:var(--cbb-auftrieb);}
+
+  .empty{display:none;flex-direction:column;align-items:center;text-align:center;padding:40px 24px;color:var(--stumm);}
+  .empty.show{display:flex;}
+  .empty p{margin:0 0 14px;font-size:.9rem;line-height:1.5;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:10px 16px;
+    border-radius:var(--r-btn);font-weight:600;font-size:.88rem;text-decoration:none;
+  }
+  .btn svg{width:16px;height:16px;}
+  .btn.solid{background:var(--cbb-kern);color:#fff;}
+  .btn.solid:hover{background:var(--cbb-auftrieb);}
+  .btn.line{border:1.5px solid var(--cbb-kern);color:var(--cbb-kern);background:#fff;}
+  .btn.line:hover{background:var(--flaeche);}
+
+  .list-foot{
+    flex-shrink:0;padding:10px var(--s-innen);border-top:1px solid var(--linie);
+    font-size:.75rem;line-height:1.5;color:var(--stumm);display:flex;flex-wrap:wrap;gap:4px 14px;
+  }
+  .list-foot a{color:var(--leise);}
+
+  /* ----------  Karte  ---------- */
+  #panel-map{flex:1;position:relative;min-width:0;}
+  #map{position:absolute;inset:0;background:#dfe4dd;}
+
+  .map-loader{
+    position:absolute;inset:0;z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    background:var(--cbb-papier);color:var(--leise);font-size:.85rem;transition:opacity .4s;
+  }
+  .map-loader.hidden{opacity:0;pointer-events:none;}
+  .spinner{width:30px;height:30px;border-radius:50%;border:3px solid var(--linie);border-top-color:var(--cbb-auftrieb);animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* Pins: weiß umrandet, damit sie auf Gelände und Satellit lesbar bleiben */
+  .pin{
+    width:30px;height:30px;border-radius:50%;background:var(--c);border:3px solid #fff;
+    box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:600;font-size:.75rem;font-variant-numeric:tabular-nums;transition:transform .17s ease;
+  }
+  .leaflet-marker-icon:hover .pin{transform:scale(1.15);}
+  .pin.is-active{transform:scale(1.3);box-shadow:0 0 0 5px color-mix(in srgb,var(--c) 40%,transparent),0 6px 16px rgba(0,0,0,.5);}
+  .user-dot{width:18px;height:18px;border-radius:50%;background:#2563eb;border:3px solid #fff;animation:pulse 2.2s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,99,235,.45);}70%{box-shadow:0 0 0 18px rgba(37,99,235,0);}100%{box-shadow:0 0 0 0 rgba(37,99,235,0);}}
+
+  /* Leaflet-Bedienelemente auf 44 px */
+  .leaflet-bar a,.leaflet-bar a:hover,.leaflet-touch .leaflet-bar a{width:44px;height:44px;line-height:44px;font-size:20px;color:var(--cbb-kern);}
+  .leaflet-bar{border:none!important;box-shadow:var(--schatten)!important;border-radius:var(--r-btn)!important;}
+  .leaflet-bar a:first-child{border-top-left-radius:var(--r-btn);border-top-right-radius:var(--r-btn);}
+  .leaflet-bar a:last-child{border-bottom-left-radius:var(--r-btn);border-bottom-right-radius:var(--r-btn);}
+  .leaflet-container{font-family:var(--body);}
+  .leaflet-control-attribution{font-size:11px;line-height:1.5;}
+
+  .map-tools{display:flex;flex-direction:column;gap:8px;}
+  .map-btn{
+    width:44px;height:44px;border-radius:var(--r-btn);background:#fff;box-shadow:var(--schatten);
+    display:flex;align-items:center;justify-content:center;color:var(--cbb-kern);
+  }
+  .map-btn:hover{background:var(--cbb-kern);color:#fff;}
+  .map-btn svg{width:20px;height:20px;}
+  .map-btn.busy{opacity:.5;pointer-events:none;}
+
+  /* Kartenart: Gelände · Satellit · Straße */
+  .basemap{display:flex;background:#fff;border-radius:var(--r-btn);box-shadow:var(--schatten);overflow:hidden;}
+  .basemap button{min-height:44px;padding:0 12px;font-size:.82rem;font-weight:600;color:var(--cbb-kern);}
+  .basemap button + button{border-left:1px solid var(--linie);}
+  .basemap button[aria-pressed="true"]{background:var(--cbb-kern);color:#fff;}
+  /* Auf schmalen Schirmen bricht die Quellenzeile um und läge sonst über dem Umschalter */
+  @media(max-width:600px){.leaflet-bottom.leaflet-left{bottom:40px;}}
+
+  .toast{
+    position:absolute;bottom:72px;left:50%;transform:translate(-50%,20px);z-index:700;max-width:calc(100% - 32px);
+    background:var(--cbb-tiefe);color:#fff;padding:10px 16px;border-radius:var(--r-btn);font-size:.85rem;
+    box-shadow:var(--schatten);opacity:0;transition:.25s;pointer-events:none;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+
+  /* Schnellfilter auf der mobilen Karte */
+  .map-filter{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:500;display:none;}
+  @media(max-width:820px){.map-filter{display:block;}}
+  .map-filter-btn{
+    display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 16px;border-radius:var(--r-btn);
+    background:#fff;box-shadow:var(--schatten);font-weight:600;font-size:.88rem;color:var(--cbb-kern);
+  }
+  .map-filter-btn svg{width:16px;height:16px;}
+  .map-filter.is-active .map-filter-btn{background:var(--cbb-kern);color:#fff;}
+  .map-filter-badge{
+    min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--cbb-signal);color:var(--cbb-tiefe);
+    font-size:.72rem;font-weight:600;display:inline-flex;align-items:center;justify-content:center;
+  }
+  .map-filter-badge[hidden]{display:none;}
+  .map-filter-pop{
+    position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);width:min(88vw,340px);
+    background:#fff;border-radius:var(--r-card);box-shadow:var(--schatten);border:1px solid var(--linie);padding:14px;
+  }
+  .map-filter-pop[hidden]{display:none;}
+  .map-filter-pop .chips{margin-top:0;}
+  .map-filter-pop .btn{width:100%;margin-top:12px;}
+
+  /* ----------  Popup  ---------- */
+  .leaflet-popup-content-wrapper{border-radius:var(--r-card);box-shadow:var(--schatten);padding:2px;}
+  .leaflet-popup-content{margin:14px 16px;width:280px!important;max-width:calc(100vw - 80px);font-size:.85rem;line-height:1.5;}
+  .leaflet-container a.leaflet-popup-close-button{width:36px;height:36px;font-size:22px;line-height:36px;}
+  .pop-cat{display:flex;align-items:center;gap:6px;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--c);margin-bottom:4px;padding-right:24px;}
+  .pop-cat .dot{width:8px;height:8px;border-radius:50%;background:var(--c);}
+  .pop-title{font-family:var(--disp);font-weight:700;font-size:1.08rem;line-height:1.25;margin-bottom:6px;}
+  .pop-desc{color:var(--leise);margin:0 0 10px;}
+  .pop-facts{margin:0 0 10px;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;}
+  .pop-facts dt{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--stumm);padding-top:2px;}
+  .pop-facts dd{margin:0;color:var(--cbb-text);min-width:0;}
+  .kind{display:inline-flex;align-items:center;gap:5px;font-weight:600;}
+  .kind::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--k);}
+  .kind.ja{--k:#277a4d;} .kind.bedingt{--k:#c2501f;} .kind.nein{--k:#9a3b3b;}
+  .pop-mtb{background:var(--flaeche);border-radius:var(--r-btn);padding:10px;margin-bottom:10px;}
+  .pop-mtb .pop-facts{margin:0;}
+  .pop-mtb-detail{font-size:.8rem;color:var(--leise);margin-top:8px;padding-top:8px;border-top:1px solid var(--linie);}
+  .pop-actions{display:flex;gap:8px;}
+  .pop-actions .btn{flex:1;padding:10px 8px;}
+  .leaflet-container .pop-actions a.btn.solid{color:#fff;}
+  .pop-src{margin-top:10px;font-size:.78rem;color:var(--leise);}
+  .pop-src summary{cursor:pointer;min-height:32px;display:flex;align-items:center;gap:6px;font-weight:600;}
+  .pop-src ul{margin:4px 0 0;padding-left:18px;}
+  .pop-src li{word-break:break-all;}
+  .tag{font-size:.72rem;font-weight:600;color:var(--leise);}
+
+  /* ----------  Responsiv  ---------- */
+  @media(max-width:820px){
+    .segmented{display:flex;}
+    .workspace{position:relative;}
+    #panel-list,#panel-map{position:absolute;inset:0;width:auto;}
+    #panel-list{border-right:none;}
+    body[data-view="map"] #panel-list{display:none;}
+    body[data-view="list"] #panel-map{display:none;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body data-view="map">
+
+<header>
+  <div class="header-inner">
+    <div class="crest" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 20l5-9 4 6 3-4 6 7z"/><circle cx="17" cy="6" r="2.4"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>Highlights im Harz</h1>
+      <p><span id="poi-total">36</span> Ziele in West-, Ost- und Südharz</p>
+    </div>
+    <a class="header-link" href="https://cbb-digital.com/">cbb-digital.com</a>
+  </div>
+</header>
+
+<div class="segmented" role="tablist" aria-label="Ansicht wechseln">
+  <button id="tab-map" role="tab" aria-selected="true" aria-controls="panel-map">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>
+    </svg>Karte
+  </button>
+  <button id="tab-list" role="tab" aria-selected="false" aria-controls="panel-list">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+    </svg>Liste
+  </button>
+</div>
+
+<main class="workspace">
+
+  <section id="panel-list" aria-label="Liste der Ziele">
+    <div class="list-controls">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
+        </svg>
+        <label class="visually-hidden" for="search-input">Ziele durchsuchen</label>
+        <input id="search-input" type="search" placeholder="Ziel oder Stichwort suchen…" autocomplete="off" />
+        <button class="search-clear" id="search-clear" type="button" aria-label="Suche zurücksetzen">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <div class="chips" id="chips" role="group" aria-label="Nach Kategorie filtern"></div>
+
+      <div class="list-status">
+        <span class="count" id="result-count" aria-live="polite"></span>
+        <div class="toggles">
+          <button class="toggle" id="kind-toggle" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="6" r="3"/><path d="M12 9v7M8 21l4-5 4 5M7 12h10"/></svg>
+            Mit kleinem Kind
+          </button>
+          <button class="toggle" id="sort-toggle" type="button" aria-pressed="false" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg>
+            Nächste zuerst
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ul id="poi-list"></ul>
+
+    <div class="empty" id="empty-state">
+      <p>Keine Ziele für diese Auswahl.</p>
+      <button class="btn line" id="empty-reset" type="button">Filter zurücksetzen</button>
+    </div>
+
+    <div class="list-foot">
+      <span>Angaben ohne Gewähr, Stand siehe Quellen</span>
+      <a href="https://cbb-digital.com/impressum.html">Impressum</a>
+      <a href="https://cbb-digital.com/datenschutz.html">Datenschutz</a>
+    </div>
+  </section>
+
+  <section id="panel-map" aria-label="Karte">
+    <div id="map"></div>
+
+    <div class="map-filter" id="map-filter">
+      <button class="map-filter-btn" id="map-filter-btn" type="button" aria-expanded="false" aria-controls="map-filter-pop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg>
+        Filter
+        <span class="map-filter-badge" id="map-filter-badge" hidden>0</span>
+      </button>
+      <div class="map-filter-pop" id="map-filter-pop" role="group" aria-label="Nach Kategorie filtern" hidden>
+        <div class="chips" id="map-chips"></div>
+        <button class="btn line" id="map-filter-reset" type="button">Zurücksetzen</button>
+      </div>
+    </div>
+
+    <div class="map-loader" id="map-loader"><div class="spinner"></div><span>Karte wird geladen…</span></div>
+    <div class="toast" id="toast" role="status"></div>
+  </section>
+
+</main>
+
+<script src="pois.js"></script>
+<script>
+/* =====================================================================
+   1 · DATEN
+   ===================================================================== */
+const CATS = window.HARZ_CATS;
+const POIS = window.HARZ_POIS;
+const IMPRESSUM = '<a href="https://cbb-digital.com/impressum.html">Impressum</a> · <a href="https://cbb-digital.com/datenschutz.html">Datenschutz</a>';
+const KONFIDENZ = { HIGH:"Hoch", "MED-HIGH":"Mittel bis hoch", MED:"Mittel", LOW:"Niedrig" };
+const KIND = { ja:"Ja", bedingt:"Bedingt", nein:"Nein" };
+
+// Texte aus pois.js landen per innerHTML im DOM: immer maskieren.
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const sicher = u => /^https:\/\//.test(u || "") ? esc(u) : null;
+const gemocht = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* =====================================================================
+   2 · ZUSTAND
+   ===================================================================== */
+const state = { search:"", cats:new Set(), kind:false, activeIndex:null, userLatLng:null, sortByDist:false };
+
+/* =====================================================================
+   3 · KARTE UND KARTENARTEN
+   ===================================================================== */
+const map = L.map("map", { zoomControl:false, maxZoom:19, zoomSnap:0.5 }).setView([51.66,10.6], 9);
+L.control.zoom({ position:"topleft", zoomInTitle:"Hineinzoomen", zoomOutTitle:"Herauszoomen" }).addTo(map);
+map.attributionControl.setPrefix(IMPRESSUM);
+
+const OSM = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende';
+const BASEMAPS = {
+  gelaende: { label:"Gelände", layers:[
+    L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", { subdomains:"abc", maxNativeZoom:17, maxZoom:19,
+      attribution:`${OSM}, SRTM | <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA)` }) ] },
+  satellit: { label:"Satellit", layers:[
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom:18, maxZoom:19,
+      attribution:'Bilder &copy; Esri, Maxar, Earthstar Geographics' }),
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom:18, maxZoom:19,
+      attribution:'Beschriftung &copy; Esri' }) ] },
+  strasse: { label:"Straße", layers:[
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", { subdomains:"abcd", maxZoom:19,
+      attribution:`${OSM} &copy; <a href="https://carto.com/attributions">CARTO</a>` }) ] },
+};
+let basemap = null;
+function setBasemap(key){
+  if(!BASEMAPS[key]) key = "gelaende";
+  if(basemap) BASEMAPS[basemap].layers.forEach(l => map.removeLayer(l));
+  BASEMAPS[key].layers.forEach(l => l.addTo(map));
+  basemap = key;
+  document.querySelectorAll(".basemap button").forEach(b => b.setAttribute("aria-pressed", b.dataset.key===key ? "true":"false"));
+  try { localStorage.setItem("harz-basemap", key); } catch {}
+}
+
+const Basemaps = L.Control.extend({
+  options:{ position:"bottomleft" },
+  onAdd(){
+    const div = L.DomUtil.create("div","basemap");
+    div.setAttribute("role","group"); div.setAttribute("aria-label","Kartenart");
+    div.innerHTML = Object.entries(BASEMAPS)
+      .map(([k,v]) => `<button type="button" data-key="${k}" aria-pressed="false">${v.label}</button>`).join("");
+    div.querySelectorAll("button").forEach(b => b.addEventListener("click", () => setBasemap(b.dataset.key)));
+    L.DomEvent.disableClickPropagation(div);
+    return div;
+  }
+});
+map.addControl(new Basemaps());
+let gespeichert = null;
+try { gespeichert = localStorage.getItem("harz-basemap"); } catch {}
+setBasemap(gespeichert || "gelaende");
+
+const loader = document.getElementById("map-loader");
+const hideLoader = () => loader.classList.add("hidden");
+BASEMAPS[basemap].layers[0].once("load", hideLoader);
+setTimeout(hideLoader, 4500); // falls ein Kachelserver hängt
+
+/* =====================================================================
+   4 · MARKER UND POPUP
+   ===================================================================== */
+const markers = {};
+POIS.forEach((p,i) => {
+  const icon = L.divIcon({ className:"", html:`<div class="pin" style="--c:${CATS[p.cat].color}">${i+1}</div>`,
+    iconSize:[30,30], iconAnchor:[15,15], popupAnchor:[0,-15] });
+  const m = L.marker([p.lat,p.lng], { icon, title:p.name, alt:p.name, riseOnHover:true, keyboard:true });
+  m.bindPopup(() => buildPopup(i), { closeButton:true, autoPanPadding:[16,16] });
+  m.on("click", () => selectPoi(i, { fly:false }));
+  m._visible = false;
+  markers[i] = m;
+});
+
+function facts(rows){
+  const r = rows.filter(([,v]) => v);
+  return r.length ? `<dl class="pop-facts">${r.map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : "";
+}
+
+function buildPopup(i){
+  const p = POIS[i], c = CATS[p.cat];
+  const route = `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
+  const kind = p.kinder ? `<span class="kind ${esc(p.kinder)}">${KIND[p.kinder] || esc(p.kinder)}</span>${p.kinderHinweis ? ` · ${esc(p.kinderHinweis)}` : ""}` : "";
+  const mtb = p.mtb ? `
+    <div class="pop-mtb">
+      ${facts([["Typ", esc(p.mtb.typ)], ["Lift", esc(p.mtb.lift)]])}
+      ${p.mtb.detail ? `<div class="pop-mtb-detail">${esc(p.mtb.detail)}</div>` : ""}
+    </div>` : "";
+  const web = sicher(p.web);
+  const quellen = (p.quellen || []).map(sicher).filter(Boolean);
+  const konf = p.konfidenz || KONFIDENZ[p.confidence];
+  const src = quellen.length || konf ? `
+    <details class="pop-src">
+      <summary>Quellen${konf ? ` <span class="tag">[${esc(konf)}]</span>` : ""}</summary>
+      ${quellen.length ? `<ul>${quellen.map(u => `<li><a href="${u}" target="_blank" rel="noopener">${u.replace(/^https:\/\/(www\.)?/,"")}</a></li>`).join("")}</ul>` : ""}
+    </details>` : "";
+
+  return `
+    <div class="pop-cat" style="--c:${c.color}"><span class="dot"></span>${esc(c.label)} · ${esc(p.region)}</div>
+    <div class="pop-title">${esc(p.name)}</div>
+    <p class="pop-desc">${esc(p.desc)}</p>
+    ${facts([["Mit Kind", kind], ["Dauer", esc(p.dauer)], ["Parken", esc(p.parken)]])}
+    ${mtb}
+    <div class="pop-actions">
+      <a class="btn solid" href="${route}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-8-8 19-3-8-8-3z"/></svg>
+        Route</a>
+      ${web ? `<a class="btn line" href="${web}" target="_blank" rel="noopener">Website</a>` : ""}
+    </div>
+    ${src}`;
+}
+
+/* =====================================================================
+   5 · HILFSFUNKTIONEN
+   ===================================================================== */
+const isMobile = () => window.matchMedia("(max-width:820px)").matches;
+function distanceKm(a,b){
+  const R=6371, rad=x=>x*Math.PI/180;
+  const dLat=rad(b.lat-a.lat), dLng=rad(b.lng-a.lng);
+  const s=Math.sin(dLat/2)**2 + Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLng/2)**2;
+  return R*2*Math.asin(Math.sqrt(s));
+}
+const fmtDist = km => km<1 ? `${Math.round(km*1000)} m` : `${km.toLocaleString("de-DE",{ maximumFractionDigits:1 })} km`;
+
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 3200);
+}
+
+const ICON_UHR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+const ICON_KIND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="6" r="3"/><path d="M12 9v7M8 21l4-5 4 5M7 12h10"/></svg>';
+
+/* =====================================================================
+   6 · FILTER UND LISTE
+   ===================================================================== */
+function getFiltered(){
+  const q = state.search.trim().toLowerCase();
+  const rows = POIS.map((p,i) => ({p,i})).filter(({p}) =>
+    (state.cats.size===0 || state.cats.has(p.cat)) &&
+    (!state.kind || p.kinder==="ja" || p.kinder==="bedingt") &&
+    (!q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.region.toLowerCase().includes(q)));
+  if(state.sortByDist && state.userLatLng) rows.sort((a,b) => distanceKm(state.userLatLng,a.p) - distanceKm(state.userLatLng,b.p));
+  return rows;
+}
+
+const listEl  = document.getElementById("poi-list");
+const emptyEl = document.getElementById("empty-state");
+const countEl = document.getElementById("result-count");
+
+function render(){
+  const rows = getFiltered();
+  listEl.innerHTML = "";
+  rows.forEach(({p,i}) => {
+    const c = CATS[p.cat];
+    const dist = state.userLatLng ? distanceKm(state.userLatLng,p) : null;
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "poi-card";
+    btn.style.setProperty("--c", c.color);
+    btn.dataset.idx = i;
+    btn.setAttribute("aria-pressed", state.activeIndex===i ? "true":"false");
+    const f = [
+      p.dauer ? `<span>${ICON_UHR}${esc(p.dauer)}</span>` : "",
+      p.kinder ? `<span>${ICON_KIND}Mit Kind: ${KIND[p.kinder] || esc(p.kinder)}</span>` : "",
+    ].join("");
+    btn.innerHTML = `
+      <span class="poi-num">${i+1}</span>
+      <span class="poi-body">
+        <span class="poi-title">${esc(p.name)}</span>
+        <span class="poi-meta"><span><span class="dot"></span>${esc(c.label)}</span><span>${esc(p.region)}</span>
+          ${dist!=null ? `<span class="poi-dist">${fmtDist(dist)}</span>` : ""}</span>
+        <span class="poi-desc">${esc(p.desc)}</span>
+        ${f ? `<span class="poi-facts">${f}</span>` : ""}
+      </span>`;
+    btn.addEventListener("click", () => selectPoi(i));
+    li.appendChild(btn);
+    listEl.appendChild(li);
+  });
+
+  emptyEl.classList.toggle("show", rows.length===0);
+  countEl.textContent = rows.length===POIS.length ? `${POIS.length} Ziele` : `${rows.length} von ${POIS.length} Zielen`;
+
+  const visible = new Set(rows.map(r => r.i));
+  POIS.forEach((_,i) => {
+    const m = markers[i];
+    if(visible.has(i) && !m._visible){ m.addTo(map); m._visible = true; applyMarkerActive(i); }
+    else if(!visible.has(i) && m._visible){ map.removeLayer(m); m._visible = false; }
+  });
+}
+
+/* =====================================================================
+   7 · AUSWAHL
+   ===================================================================== */
+function applyMarkerActive(i){
+  const m = markers[i];
+  const el = m && m._visible && m.getElement();
+  if(!el) return;
+  const on = state.activeIndex===i;
+  el.querySelector(".pin")?.classList.toggle("is-active", on);
+  m.setZIndexOffset(on ? 1000 : 0);
+}
+function updateActiveStates(){
+  listEl.querySelectorAll(".poi-card").forEach(card =>
+    card.setAttribute("aria-pressed", Number(card.dataset.idx)===state.activeIndex ? "true":"false"));
+  POIS.forEach((_,i) => applyMarkerActive(i));
+}
+
+function selectPoi(i, { fly = true } = {}){
+  state.activeIndex = i;
+  updateActiveStates();
+  const p = POIS[i], m = markers[i];
+  const open = () => { if(m && m._visible) m.openPopup(); };
+  const go = () => {
+    if(!fly) return open();
+    if(gemocht()){ map.setView([p.lat,p.lng], 13); open(); }
+    else { map.flyTo([p.lat,p.lng], 13, { duration:1.1 }); map.once("moveend", open); }
+  };
+  if(isMobile() && document.body.dataset.view!=="map"){ setView("map"); setTimeout(() => { map.invalidateSize(); go(); }, 60); }
+  else go();
+  listEl.querySelector(`[data-idx="${i}"]`)?.scrollIntoView({ block:"nearest" });
+}
+function clearActive(){ state.activeIndex = null; updateActiveStates(); }
+map.on("click", clearActive);
+map.on("popupclose", clearActive);
+
+/* =====================================================================
+   8 · KATEGORIE-FILTER (Mehrfachauswahl, Liste und Karte synchron)
+   ===================================================================== */
+const chipsEl     = document.getElementById("chips");
+const mapChipsEl  = document.getElementById("map-chips");
+const filterWrap  = document.getElementById("map-filter");
+const filterBadge = document.getElementById("map-filter-badge");
+
+function buildChips(){
+  const counts = {};
+  POIS.forEach(p => counts[p.cat] = (counts[p.cat]||0) + 1);
+  const entries = [["all","Alle",null,POIS.length], ...Object.entries(CATS).map(([k,v]) => [k,v.label,v.color,counts[k]||0])];
+  [chipsEl, mapChipsEl].forEach(box => {
+    box.innerHTML = "";
+    entries.forEach(([key,label,color,cnt]) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.dataset.cat = key;
+      if(color) b.style.setProperty("--c", color);
+      b.innerHTML = `${color ? '<span class="dot"></span>' : ""}${esc(label)}<span class="cnt">${cnt}</span>`;
+      b.addEventListener("click", () => toggleCat(key));
+      box.appendChild(b);
+    });
+  });
+  syncChips();
+}
+function toggleCat(key){
+  if(key==="all") state.cats.clear();
+  else if(state.cats.has(key)) state.cats.delete(key);
+  else state.cats.add(key);
+  syncChips(); render();
+}
+function syncChips(){
+  const n = state.cats.size + (state.kind ? 1 : 0);
+  document.querySelectorAll(".chips .chip").forEach(c => {
+    const k = c.dataset.cat;
+    c.setAttribute("aria-pressed", (k==="all" ? state.cats.size===0 : state.cats.has(k)) ? "true":"false");
+  });
+  kindToggle.setAttribute("aria-pressed", state.kind ? "true":"false");
+  filterBadge.textContent = n; filterBadge.hidden = n===0;
+  filterWrap.classList.toggle("is-active", n>0);
+}
+
+const kindToggle = document.getElementById("kind-toggle");
+kindToggle.addEventListener("click", () => { state.kind = !state.kind; syncChips(); render(); });
+
+const filterBtn = document.getElementById("map-filter-btn");
+const filterPop = document.getElementById("map-filter-pop");
+function setFilterPop(open){ filterPop.hidden = !open; filterBtn.setAttribute("aria-expanded", open ? "true":"false"); }
+filterBtn.addEventListener("click", e => { e.stopPropagation(); setFilterPop(filterPop.hidden); });
+document.getElementById("map-filter-reset").addEventListener("click", () => { state.cats.clear(); state.kind = false; syncChips(); render(); });
+document.addEventListener("click", e => { if(!filterPop.hidden && !filterWrap.contains(e.target)) setFilterPop(false); });
+document.addEventListener("keydown", e => { if(e.key==="Escape" && !filterPop.hidden){ setFilterPop(false); filterBtn.focus(); } });
+map.on("click", () => setFilterPop(false));
+
+/* =====================================================================
+   9 · SUCHE
+   ===================================================================== */
+const searchInput = document.getElementById("search-input");
+const searchClear = document.getElementById("search-clear");
+searchInput.addEventListener("input", e => { state.search = e.target.value; searchClear.classList.toggle("show", state.search.length>0); render(); });
+searchClear.addEventListener("click", () => { searchInput.value = ""; state.search = ""; searchClear.classList.remove("show"); render(); searchInput.focus(); });
+document.getElementById("empty-reset").addEventListener("click", () => {
+  state.search = ""; state.cats.clear(); state.kind = false;
+  searchInput.value = ""; searchClear.classList.remove("show");
+  syncChips(); render();
+});
+
+/* =====================================================================
+   10 · KARTEN-WERKZEUGE (Übersicht, Standort)
+   ===================================================================== */
+const Tools = L.Control.extend({
+  options:{ position:"topright" },
+  onAdd(){
+    const div = L.DomUtil.create("div","map-tools");
+    div.innerHTML = `
+      <button class="map-btn" id="btn-overview" type="button" title="Alle Ziele zeigen" aria-label="Alle Ziele zeigen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      </button>
+      <button class="map-btn" id="btn-locate" type="button" title="Meinen Standort zeigen" aria-label="Meinen Standort zeigen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+      </button>`;
+    L.DomEvent.disableClickPropagation(div);
+    return div;
+  }
+});
+map.addControl(new Tools());
+
+document.getElementById("btn-overview").addEventListener("click", () => {
+  clearActive(); map.closePopup();
+  const pts = POIS.filter((_,i) => markers[i]._visible).map(p => [p.lat,p.lng]);
+  const anim = { animate:!gemocht(), duration:1 };
+  if(pts.length>1) map.fitBounds(L.latLngBounds(pts), { padding:[50,50], ...anim });
+  else if(pts.length===1) map.setView(pts[0], 12, anim);
+});
+
+let userMarker = null;
+document.getElementById("btn-locate").addEventListener("click", () => {
+  const btn = document.getElementById("btn-locate");
+  if(!navigator.geolocation){ toast("Der Browser kann den Standort nicht bestimmen."); return; }
+  btn.classList.add("busy");
+  navigator.geolocation.getCurrentPosition(pos => {
+    btn.classList.remove("busy");
+    const ll = { lat:pos.coords.latitude, lng:pos.coords.longitude };
+    state.userLatLng = ll;
+    if(userMarker) map.removeLayer(userMarker);
+    userMarker = L.marker([ll.lat,ll.lng], { icon:L.divIcon({ className:"", html:'<div class="user-dot"></div>', iconSize:[18,18], iconAnchor:[9,9] }),
+      zIndexOffset:2000, interactive:false }).addTo(map);
+    document.getElementById("sort-toggle").hidden = false;
+    map.setView([ll.lat,ll.lng], 10, { animate:!gemocht() });
+    render();
+    toast("Standort gefunden, Entfernungen stehen in der Liste.");
+  }, () => { btn.classList.remove("busy"); toast("Standort ließ sich nicht bestimmen."); },
+  { enableHighAccuracy:true, timeout:8000 });
+});
+document.getElementById("sort-toggle").addEventListener("click", e => {
+  state.sortByDist = !state.sortByDist;
+  e.currentTarget.setAttribute("aria-pressed", state.sortByDist ? "true":"false");
+  render();
+});
+
+/* =====================================================================
+   11 · MOBIL: KARTE ODER LISTE
+   ===================================================================== */
+const tabMap = document.getElementById("tab-map");
+const tabList = document.getElementById("tab-list");
+function setView(v){
+  document.body.dataset.view = v;
+  tabMap.setAttribute("aria-selected", v==="map" ? "true":"false");
+  tabList.setAttribute("aria-selected", v==="list" ? "true":"false");
+  if(v==="map") setTimeout(() => map.invalidateSize(), 50);
+}
+tabMap.addEventListener("click", () => setView("map"));
+tabList.addEventListener("click", () => setView("list"));
+
+/* =====================================================================
+   12 · START
+   ===================================================================== */
+document.getElementById("poi-total").textContent = POIS.length;
+buildChips();
+render();
+map.fitBounds(L.latLngBounds(POIS.map(p => [p.lat,p.lng])), { padding:[30,30], animate:false });
+setTimeout(() => map.invalidateSize(), 150);
+window.addEventListener("resize", () => map.invalidateSize());
+</script>
+</body>
+</html>
