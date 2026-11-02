@@ -396,7 +396,7 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "Bikepark",
       "lift": "Sessellift Bocksberg-Seilbahn",
-      "detail": "8 Strecken laut Betreiber: Böckchen (blau, Singletrail), Sprungböckchen (blau/rot, Mini-Jumpline/BikerX), Wilder Drache (blau/rot, Freeride), Bock auf Wurzeln (Roots), Sprungbock (rot/schwarz, Jumpline), Wilder Keiler (schwarz, DH-Race), Wilder Fuchs (schwarz, Race Track), Wilder Bock (schwarz, DH). Saison 2026 ab 28.03.2026."
+      "detail": "8 Strecken laut Betreiber: Böckchen (blau, Singletrail), Sprungböckchen (blau/rot, Mini-Jumpline/BikerX), Wilder Drache (blau/rot, Freeride), Bock auf Wurzeln (Roots), Sprungbock (rot/schwarz, Jumpline), Wilder Keiler (schwarz, DH-Race), Wilder Fuchs (schwarz, Race Track), Wilder Bock (schwarz, DH). Saison 2026 vom 28.03. bis 01.11.2026; Sprungbock laut Betreiber teilweise gesperrt."
     },
     "confidence": "HIGH",
     "web": "https://www.bikepark-hahnenklee.de/",
@@ -417,11 +417,11 @@ const HARZ_POIS = [
     "lng": 10.6129,
     "cat": "mtb",
     "region": "Westharz",
-    "desc": "Bikepark an der Wurmberg-Seilbahn (~22 km östlich). Längste Abfahrten im Harz, ~400 Hm am Stück.",
+    "desc": "Bikepark an der Wurmberg-Seilbahn (~22 km östlich), außerhalb des Nationalparks. Abfahrten mit ~400 Hm am Stück.",
     "mtb": {
       "typ": "Bikepark",
-      "lift": "Wurmbergseilbahn (2.800 m, längste Seilbahn Norddeutschlands)",
-      "detail": "Über 18 Streckenkilometer, Tageskarte 38 € (bis 17 Jahre 27 €), laut braunlage.de; die Betreiberseite war nicht erreichbar. Vor Anfahrt Streckenfreigabe prüfen."
+      "lift": "Wurmbergseilbahn (2.800 m)",
+      "detail": "Über 18 Streckenkilometer, Tageskarte 38 € (bis 17 Jahre und Studierende 27 €). Betrieb 2026 bis einschließlich 01.11., danach Revisionspause bis Mitte Dezember. Vor Anfahrt Streckenfreigabe prüfen."
     },
     "confidence": "HIGH",
     "web": "https://www.braunlage.de/poi/bikepark-braunlage",
@@ -431,6 +431,7 @@ const HARZ_POIS = [
     "kinderHinweis": "Bikepark nichts für Kleinkinder; Seilbahn nimmt Kinderwagen mit, Spielplätze am Gipfel.",
     "quellen": [
       "https://www.braunlage.de/poi/bikepark-braunlage",
+      "https://www.wurmberg-seilbahn.de",
       "https://www.braunlage.de/poi/monsterroller",
       "https://www.braunlage.de/poi/wurmbergseilbahn"
     ],
@@ -466,7 +467,7 @@ const HARZ_POIS = [
     "lng": 10.4276,
     "cat": "mtb",
     "region": "Westharz",
-    "desc": "Insider-Bikepark an der Okertalsperre (~20 km nordöstlich). Gilt als technisch anspruchsvollster Spot im Harz.",
+    "desc": "Bikepark an der Okertalsperre (~25 km nordöstlich), laut Betreiber für Fahrer mit Erfahrung.",
     "mtb": {
       "typ": "Bikepark",
       "lift": "Schlepplift (Ankerbügel)",
@@ -495,18 +496,19 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "MTB-Fernweg / Rundkurs",
       "lift": "–",
-      "detail": "184 km laut Betreiber. Die Etappe Hanskühnenburg–Großer Knollen läuft überwiegend auf gut fahrbaren Schotterstraßen; danach Stöberhai, Matthias-Schmidt-Berg und Wurmberg."
+      "detail": "184 km laut Betreiber. Die Etappe Hanskühnenburg–Großer Knollen läuft überwiegend auf gut fahrbaren Schotterstraßen; danach Stöberhai, Matthias-Schmidt-Berg und Wurmberg. Rund um die Hanskühnenburg im Nationalpark: Wegegebot beachten."
     },
     "confidence": "HIGH",
     "web": "https://devils-trail.de/strecke-1-3/",
     "parken": "Parkplatz Stieglitzeck (B 242), dann über die Ackerstraße zur Baude",
     "dauer": "Etappe bis Großer Knollen: 23 km, 472 Hm; gesamt 184 km, 4.300 Hm",
     "kinder": "nein",
-    "kinderHinweis": "Sehr anspruchsvolle MTB-Fernrunde; Baude am Start nur zu Fuß erreichbar.",
+    "kinderHinweis": "Sehr anspruchsvolle MTB-Fernrunde; die Baude ist zu Fuß, per MTB oder im Winter auf Ski erreichbar.",
     "quellen": [
       "https://devils-trail.de/strecke-1-3/",
       "https://devils-trail.de/start/",
-      "https://www.harzer-wandernadel.de/stempelstellen/uebersichtskarte/stempelstelle-144-hanskuehnenburg/"
+      "https://www.harzer-wandernadel.de/stempelstellen/uebersichtskarte/stempelstelle-144-hanskuehnenburg/",
+      "https://www.nationalpark-harz.de/de/urlaub-im-nationalpark/waldgaststaetten/"
     ],
     "konfidenz": "Hoch"
   },
@@ -516,20 +518,21 @@ const HARZ_POIS = [
     "lng": 10.3917,
     "cat": "mtb",
     "region": "Südharz",
-    "desc": "Das Highlight der Hanskühnenburg-Runde – wurzeliger, technisch-flowiger Singletrail-Abstieg.",
+    "desc": "Von Nutzern benannter Trail-Abstieg nahe der Hanskühnenburg (Acker), im Nationalpark. Kein offizieller Betreiber oder Streckenstatus.",
     "mtb": {
       "typ": "Singletrail",
       "lift": "–",
-      "detail": "Ca. 400 Hm bergab, S1–S2. Nahe der Hanskühnenburg, laut Komoot im Nationalpark Harz. Voll gefedert klar im Vorteil."
+      "detail": "Ca. 400 Hm bergab, S1–S2 (Tourbeschreibung von 2010). Ob Radfahren hier erlaubt ist, ist nicht belegt. Im Nationalpark gilt das Wegegebot: nur ausgeschilderte, nicht gesperrte Wege befahren, Wanderer haben Vorrang. Sperrungen vorab prüfen."
     },
     "confidence": "MED-HIGH",
     "parken": "Parkplatz am Ortsende von Lonau (Sackgasse), Runde über Hanskühnenburg",
     "dauer": "Abfahrt ca. 400 Hm, S1–S2",
     "kinder": "nein",
-    "kinderHinweis": "Technischer Singletrail im Nationalpark, kein Familienangebot am Einstieg.",
+    "kinderHinweis": "Im Nationalpark, Status ungeklärt, kein Familienangebot am Einstieg.",
     "quellen": [
       "https://www.gps-tour.info/de/touren/detail.58369.html",
-      "https://www.komoot.com/de-de/highlight/259197"
+      "https://www.komoot.com/de-de/highlight/259197",
+      "https://www.nationalpark-harz.de/de/natur-erleben/sport-im-nationalpark/radfahren/"
     ],
     "konfidenz": "Niedrig"
   },
@@ -543,7 +546,7 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "Singletrail",
       "lift": "–",
-      "detail": "~6 km, ~300 Hm bergab. Oben flach/matschig (S1), unten steil und steinig (S2) – kompletter Federweg empfohlen. Bei Nässe deutlich anspruchsvoller. Gut belegt (Komoot-Highlight, mehrere POV-Videos)."
+      "detail": "~6 km, ~300 Hm bergab. Oben flach/matschig (S1), unten steil und steinig (S2), bei Nässe deutlich anspruchsvoller (Tourbeschreibung von 2010). Lage zur Nationalparkgrenze und Radfreigabe ungeklärt; im Nationalpark gilt das Wegegebot."
     },
     "confidence": "HIGH",
     "parken": "Parkplatz Tilman-Riemenschneider-Haus (Fuchshallerweg), Osterode",
@@ -553,7 +556,8 @@ const HARZ_POIS = [
     "quellen": [
       "https://www.gps-tour.info/de/touren/detail.20645.html",
       "https://www.gps-tour.info/de/touren/detail.58369.html",
-      "https://www.komoot.com/de-de/highlight/520930"
+      "https://www.komoot.com/de-de/highlight/520930",
+      "https://www.nationalpark-harz.de/de/natur-erleben/sport-im-nationalpark/radfahren/"
     ],
     "konfidenz": "Mittel"
   },
@@ -567,7 +571,7 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "Singletrail",
       "lift": "–",
-      "detail": "~300 Hm bergab, S1. Mündet bei Sieber. Lässt sich gut mit Goldenke und Brackberg zu einer Sieber-Runde verketten."
+      "detail": "~300 Hm bergab, S1, mündet bei Sieber (Tourbeschreibung von 2010). Offizieller Status und Lage zur Nationalparkgrenze ungeklärt; nur auf erlaubten Wegen fahren."
     },
     "confidence": "MED",
     "parken": "Parkplatz am Ortsende von Lonau (Sackgasse), Runde über Sieber",
@@ -589,7 +593,7 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "Singletrail",
       "lift": "–",
-      "detail": "Kurzer S1-Trail ins Goldenketal: griffiger Waldboden, kurze Stein- und Wurzelpassagen, kleine Spitzkehren."
+      "detail": "Kurzer S1-Trail ins Goldenketal mit kurzen Stein- und Wurzelpassagen (Tourbeschreibung von 2010). Offizieller Status ungeklärt; nur auf erlaubten Wegen fahren."
     },
     "confidence": "MED",
     "parken": "Parkplatz am Ortsende von Lonau (Sackgasse)",
@@ -606,11 +610,11 @@ const HARZ_POIS = [
     "lng": 10.3678,
     "cat": "mtb",
     "region": "Südharz",
-    "desc": "Schneller Speedtrail am Braakberg bei Lonau, nicht technisch, dafür Tempo.",
+    "desc": "Schneller, wenig technischer Trail am Braakberg bei Lonau.",
     "mtb": {
       "typ": "Singletrail",
       "lift": "–",
-      "detail": "S1, ~300 Hm Anstieg vor dem Einstieg. Kaum technisch, dafür schnell – 'mit 40 km/h durch den Wald', mündet am Lonauer Campingplatz."
+      "detail": "S1, ~300 Hm Anstieg vor dem Einstieg, mündet am Lonauer Campingplatz (Tourbeschreibung von 2010). Offizieller Status ungeklärt; auf Wanderer achten."
     },
     "confidence": "MED",
     "parken": "Parkplatz am Ortsende von Lonau, ca. 200 m vom Campingplatz",
@@ -628,21 +632,22 @@ const HARZ_POIS = [
     "lng": 10.4032,
     "cat": "mtb",
     "region": "Südharz",
-    "desc": "Baude & Aussichtsturm am Acker-Höhenzug – Drehscheibe für mehrere Trail-Abfahrten.",
+    "desc": "Baude & Aussichtsturm auf dem Acker, im Nationalpark – Wanderziel und Etappenziel für MTB-Touren.",
     "mtb": {
       "typ": "Trail-Knotenpunkt",
       "lift": "–",
-      "detail": "~800 m ü. NN, Stempelstelle HWN 144. Ausgangspunkt für Tante-Ju, Nasser Weg und Anschlüsse Richtung Goldenke. Devils-Trail-Etappe 1 endet hier."
+      "detail": "811 m ü. NHN, Nationalpark-Waldgaststätte, Stempelstelle HWN 144. Devils-Trail-Etappe 1 endet hier. Anfahrt nur auf ausgeschilderten, nicht gesperrten Wegen."
     },
     "confidence": "HIGH",
     "web": "https://www.harzer-wandernadel.de/stempelstellen/uebersichtskarte/stempelstelle-144-hanskuehnenburg/",
-    "parken": "Parkplatz Stieglitzeck (B 242), dann Ackerstraße oder Reitstieg",
+    "parken": "Parkplatz Stieglitzeck (B 242), dann über die Ackerstraße",
     "dauer": "HE 1 ab Herzberg: 4:30 Std. (41,7 km, 914 Hm)",
     "kinder": "bedingt",
-    "kinderHinweis": "Waldgaststätte mit Aussichtsturm, aber nur zu Fuß über Waldwege erreichbar.",
+    "kinderHinweis": "Waldgaststätte mit Aussichtsturm; zu Fuß, per MTB oder im Winter auf Ski erreichbar.",
     "quellen": [
       "https://www.harzer-wandernadel.de/stempelstellen/uebersichtskarte/stempelstelle-144-hanskuehnenburg/",
-      "https://touren.harzinfo.de/de/tour/mountainbike/he1-tour-der-giganten/37514222/"
+      "https://touren.harzinfo.de/de/tour/mountainbike/he1-tour-der-giganten/37514222/",
+      "https://www.nationalpark-harz.de/de/urlaub-im-nationalpark/waldgaststaetten/"
     ],
     "konfidenz": "Hoch"
   },
@@ -729,7 +734,7 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "Ausgeschilderte MTB-Route",
       "lift": "–",
-      "detail": "20,5 km / 318 Hm, mittel. Fahrtechnisch anspruchsvoller Bohlen-Trail zwischen Oderteich und Sonnenberg, laut Betreiber gefährlich bei Nässe. Ab St. Andreasberg gibt es die Routen A 1 bis A 5."
+      "detail": "20,5 km / 318 Hm, mittel. Fahrtechnisch anspruchsvoller Bohlen-Trail zwischen Oderteich und Sonnenberg, laut Betreiber gefährlich bei Nässe. Verläuft in höheren Lagen des Nationalparks: der Beschilderung folgen, Wanderern Vorrang geben."
     },
     "confidence": "HIGH",
     "web": "https://www.volksbank-arena-harz.de/routen/routen-ab-st-andreasberg/a-1-sonnenberg-rundtour",
@@ -752,7 +757,7 @@ const HARZ_POIS = [
     "mtb": {
       "typ": "Ausgeschilderte MTB-Route",
       "lift": "–",
-      "detail": "28,9 km / 811 Hm, schwer, als Singletrail-Route markiert. Start am Oberharzer Bergwerksmuseum. Einer von ~11 O-Routen im Oberharz rund um Clausthal-Zellerfeld/Altenau."
+      "detail": "28,9 km / 811 Hm, schwer, als Singletrail-Route markiert. Start am Oberharzer Bergwerksmuseum."
     },
     "confidence": "HIGH",
     "web": "https://www.volksbank-arena-harz.de/routen/routen-ab-clausthal-zellerfeld/o-1-wild-mans-trail",
